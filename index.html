@@ -183,7 +183,7 @@
 			});
 
 			async function fetchWeatherData(city) {
-				const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`;
+				const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`;
 				const response = await fetch(url);
 				const data = await response.json();
 
@@ -196,7 +196,7 @@
 					condition: `${data.current.wind_kph} %`,
 					wind: `${data.current.wind_kph} km/h`,
 					rain: `${data.current.precip_mm} mm`,
-					canWearSweatshirt: data.current.temp_c >= 15 && data.current.temp_c <= 23
+					canWearSweatshirt: data.current.temp_c >= 15 && data.current.temp_c <= 25
 				};
 
 				return weatherData;
