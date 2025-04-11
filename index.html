@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Puedo salir en sudadera? | Can I go out in a sweatshirt?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .sweatshirt-emoji {
+            font-size: 6rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .input-field {
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .input-field:focus {
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        }
+        
+        .check-button {
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+        
+        .check-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .check-button:active {
+            transform: scale(0.98);
+        }
+        
+        .result-card {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .result-card.show {
+            opacity: 1;
+            max-height: 300px;
+        }
+        
+        /* Estilo para el contenedor del input y las sugerencias */
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        /* Estilo para la lista de sugerencias */
+        .suggestions-list {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            z-index: 10;
+            max-height: 200px;
+            overflow-y: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @media (max-width: 640px) {
+            .sweatshirt-emoji {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-md mx-auto text-center">
+        <!-- Header with sweatshirt emoji -->
+        <img src="assets/sudadera.png" alt="Sudadera" class="sweatshirt-emoji mb-1">
+        
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+            ¿Puedo salir en sudadera?
+        </h1>
+        <p class="text-lg text-gray-600 mb-4">
+            Comprueba si hoy es buen día para sudadera
+        </p>
+        
+        <!-- Input form -->
+        <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+            <div class="flex flex-col space-y-3">
+                <div class="input-container">
+                    <input 
+                        type="text" 
+                        id="cityInput" 
+                        placeholder="Introduce tu ciudad o pueblo..." 
+                        class="input-field px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-indigo-500 text-gray-700 w-full"
+                    >
+                    <!-- El desplegable de sugerencias se insertará aquí -->
+                </div>
+                <button 
+                    id="checkButton" 
+                    class="check-button bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md"
+                >
+                    Comprobar
+                </button>
+            </div>
+        </div>
+        
+        <!-- Result section (hidden by default) -->
+        <div id="resultCard" class="result-card bg-white rounded-xl shadow-md p-4">
+            <div id="resultContent" class="flex flex-col items-center">
+                <!-- Result will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cityInput = document.getElementById('cityInput');
+            const checkButton = document.getElementById('checkButton');
+            const resultCard = document.getElementById('resultCard');
+            const resultContent = document.getElementById('resultContent');
+            
+            const apiKey = '2700c9141a4c4716957175706251104';
+            
+            checkButton.addEventListener('click', function() {
+                const city = cityInput.value.trim().replace('ñ', 'n').toLowerCase();
+				
+                if (city) {
+                    // Llamar a la API de WeatherAPI
+					fetchWeatherData(city)
+						.then(weatherData => {
+							let resultHTML = '';
+							const capitalizedCity = city.charAt(0).toUpperCase() + city.slice(1);
+							
+							if (weatherData.canWearSweatshirt) {
+								resultHTML = `
+									<div class="bg-green-50 border border-green-200 text-green-800 rounded-xl p-3 w-full text-center shadow-sm">
+										<h2 class="text-xl font-semibold mb-1">✅ ¡Sí, adelante!</h2>
+										<p class="text-sm text-green-700 mb-2">Hoy es un buen día para salir en sudadera en <strong>${capitalizedCity}</strong>.</p>
+										<div class="grid grid-cols-2 gap-3 text-sm text-left text-green-900 bg-white rounded-lg p-3 shadow-inner">
+											<div>📈 <strong>Temperatura:</strong> ${weatherData.temperature}°C</div>
+											<div>🌤️ <strong>Nubes:</strong> ${weatherData.condition}</div>
+											<div>💨 <strong>Viento:</strong> ${weatherData.wind}</div>
+											<div>🌧️ <strong>Lluvia:</strong> ${weatherData.rain}</div>
+										</div>
+									</div>
+								`;
+							} else {
+								resultHTML = `
+									<div class="bg-red-50 border border-red-200 text-red-800 rounded-xl p-3 w-full text-center shadow-sm">
+										<h2 class="text-xl font-semibold mb-1">❌ Mejor no...</h2>
+										<p class="text-sm text-red-700 mb-2">No parece buen clima para sudadera en <strong>${capitalizedCity}</strong>.</p>
+										<div class="grid grid-cols-2 gap-3 text-sm text-left text-red-900 bg-white rounded-lg p-3 shadow-inner">
+											<div>📈 <strong>Temperatura:</strong> ${weatherData.temperature}°C</div>
+											<div>🌤️ <strong>Nubes:</strong> ${weatherData.condition}</div>
+											<div>💨 <strong>Viento:</strong> ${weatherData.wind}</div>
+											<div>🌧️ <strong>Lluvia:</strong> ${weatherData.rain}</div>
+										</div>
+									</div>
+								`;
+							}
+							resultContent.innerHTML = resultHTML;
+							resultCard.classList.add('show');
+							resultCard.scrollIntoView({ behavior: 'smooth' });
+						})
+						.catch(error => {
+							alert('Hubo un problema al obtener los datos del clima');
+							console.error('Error fetching weather data:', error);
+						});
+				} else {
+					alert('Debes introducir una ciudad o un pueblo');
+				}
+			});
+
+			async function fetchWeatherData(city) {
+				const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`;
+				const response = await fetch(url);
+				const data = await response.json();
+
+				if (data.error) {
+					throw new Error(data.error.message);
+				}
+
+				const weatherData = {
+					temperature: data.current.temp_c,
+					condition: `${data.current.wind_kph} %`,
+					wind: `${data.current.wind_kph} km/h`,
+					rain: `${data.current.precip_mm} mm`,
+					canWearSweatshirt: data.current.temp_c >= 15 && data.current.temp_c <= 23
+				};
+
+				return weatherData;
+			}
+		});
+    </script>
+	
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const cityInput = document.getElementById('cityInput');
+			const inputContainer = cityInput.parentElement; // Obtener el contenedor del input
+			const citiesData = 'poblaciones.json'; // Ruta del archivo JSON local con las ciudades
+
+			let allCities = [];
+
+			// Cargar las poblaciones de España desde el archivo JSON
+			fetch(citiesData)
+				.then(response => response.json())
+				.then(data => {
+					allCities = data; // Almacenar las poblaciones en la variable
+				})
+				.catch(error => console.error('Error fetching city data:', error));
+
+			// Event listener para autocompletado
+			cityInput.addEventListener('input', function () {
+				const query = cityInput.value.trim().toLowerCase();
+				if (query.length >= 3) { // Solo buscar cuando el usuario haya escrito más de 2 caracteres
+					const matchingCities = searchCities(query);
+					showAutocompleteSuggestions(matchingCities);
+				} else {
+					// Si no hay texto o es menor de 3 caracteres, no mostrar sugerencias
+					hideAutocompleteSuggestions();
+				}
+			});
+
+			// Buscar las ciudades que coincidan con el texto ingresado
+			function searchCities(query) {
+				return allCities.filter(city => city.label.toLowerCase().includes(query));
+			}
+
+			// Mostrar las sugerencias de autocompletado
+			function showAutocompleteSuggestions(suggestions) {
+				// Si ya hay un desplegable, eliminarlo antes de agregar las nuevas sugerencias
+				hideAutocompleteSuggestions();
+
+				if (suggestions.length === 0) return;
+
+				const suggestionList = document.createElement('ul');
+				suggestionList.classList.add('suggestions-list', 'bg-white', 'border', 'border-gray-300', 'mt-1');
+				suggestionList.innerHTML = ''; // Limpiar las sugerencias anteriores
+
+				suggestions.forEach(suggestion => {
+					const listItem = document.createElement('li');
+					listItem.textContent = suggestion.label; // Mostrar el nombre de la ciudad
+					listItem.classList.add('px-4', 'py-2', 'cursor-pointer', 'hover:bg-gray-100');
+					listItem.addEventListener('click', function () {
+						cityInput.value = suggestion.label; // Establece la ciudad seleccionada en el input
+						hideAutocompleteSuggestions(); // Elimina las sugerencias después de seleccionar
+					});
+					suggestionList.appendChild(listItem);
+				});
+
+				// Agregar la lista de sugerencias al contenedor del input
+				inputContainer.appendChild(suggestionList);
+			}
+
+			// Ocultar las sugerencias cuando el usuario haga clic fuera del input
+			function hideAutocompleteSuggestions() {
+				const suggestionList = inputContainer.querySelector('.suggestions-list');
+				if (suggestionList) {
+					suggestionList.remove();
+				}
+			}
+
+			// Cerrar las sugerencias si el usuario hace clic fuera del input
+			document.addEventListener('click', function (e) {
+				if (!inputContainer.contains(e.target)) {
+					hideAutocompleteSuggestions();
+				}
+			});
+		});
+	</script>
+
+    <footer class="mt-8 text-center text-gray-500 text-sm pb-4">
+        Made with <span class="text-red-500">❤️</span> by Antonio Espinosa
+    </footer>
+</body>
+</html>
