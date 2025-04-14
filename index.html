@@ -147,7 +147,7 @@
 								resultHTML = `
 									<div class="bg-green-50 border border-green-200 text-green-800 rounded-xl p-3 w-full text-center shadow-sm">
 										<h2 class="text-xl font-semibold mb-1">✅ ¡Sí, adelante!</h2>
-										<p class="text-sm text-green-700 mb-2">Hoy es un buen día para salir en sudadera en <strong>${capitalizedCity}</strong>.</p>
+										<p class="text-sm text-green-700 mb-2">Hoy es un buen día para salir en sudadera en <strong>${weatherData.city}</strong>.</p>
 										<div class="grid grid-cols-2 gap-3 text-sm text-left text-green-900 bg-white rounded-lg p-3 shadow-inner">
 											<div>📈 <strong>Temperatura:</strong> ${weatherData.temperature}°C</div>
 											<div>🌤️ <strong>Nubes:</strong> ${weatherData.condition}</div>
@@ -160,7 +160,7 @@
 								resultHTML = `
 									<div class="bg-red-50 border border-red-200 text-red-800 rounded-xl p-3 w-full text-center shadow-sm">
 										<h2 class="text-xl font-semibold mb-1">❌ Mejor no...</h2>
-										<p class="text-sm text-red-700 mb-2">No parece buen clima para sudadera en <strong>${capitalizedCity}</strong>.</p>
+										<p class="text-sm text-red-700 mb-2">No parece buen clima para sudadera en <strong>${weatherData.city}</strong>.</p>
 										<div class="grid grid-cols-2 gap-3 text-sm text-left text-red-900 bg-white rounded-lg p-3 shadow-inner">
 											<div>📈 <strong>Temperatura:</strong> ${weatherData.temperature}°C</div>
 											<div>🌤️ <strong>Nubes:</strong> ${weatherData.condition}</div>
@@ -193,6 +193,7 @@
 				}
 
 				const weatherData = {
+					city: data.location.name,
 					temperature: data.current.temp_c,
 					condition: `${data.current.wind_kph} %`,
 					wind: `${data.current.wind_kph} km/h`,
@@ -282,7 +283,10 @@
 	</script>
 
     <footer class="mt-8 text-center text-gray-500 text-sm pb-4">
-        Made with <span class="text-red-500">❤️</span> by Antonio Espinosa
+        Made with <span class="text-red-500">❤️</span> 
+		<a href="https://www.linkedin.com/in/antonio-espinosa-velasco" target="_blank" class="text-blue-600 hover:underline">
+			Antonio Espinosa
+		</a>
 		<div style="margin-top: 1rem;">
 			<div class="mt-2">
 				<a href="https://buymeacoffee.com/antonio.espinosa" target="_blank" class="text-yellow-600 underline hover:text-yellow-700">
