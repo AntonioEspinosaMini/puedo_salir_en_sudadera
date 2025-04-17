@@ -41,7 +41,7 @@
             font-family: 'Poppins', sans-serif;
             background-color: #fafafa;
             transition: all 0.3s ease;
-        }
+        }	
         
         .sweatshirt-emoji {
             font-size: 6rem;
@@ -121,9 +121,9 @@
             ¿Puedo salir en sudadera?
         </h1>
         <h2 class="text-lg text-gray-600 mb-4">
-		  Comprueba si hoy es buen día para sudadera
+			Descubre si es el clima ideal para usar sudadera antes de salir de casa.
 		</h2>
-        
+
         <!-- Input form -->
         <div class="bg-white rounded-xl shadow-md p-4 mb-6">
             <div class="flex flex-col space-y-3">
@@ -147,7 +147,7 @@
         
         <!-- Result section (hidden by default) -->
         <div id="resultCard" class="result-card bg-white rounded-xl shadow-md p-4">
-            <div id="resultContent" class="flex flex-col items-center">
+            <div id="resultContent" class="flex flex-col items-center" aria-live="polite">
                 <!-- Result will be inserted here by JavaScript -->
             </div>
         </div>
@@ -204,8 +204,11 @@
 							resultCard.scrollIntoView({ behavior: 'smooth' });
 						})
 						.catch(error => {
-							alert('Hubo un problema al obtener los datos del clima');
-							console.error('Error fetching weather data:', error);
+							resultContent.innerHTML = `
+								<div class="bg-yellow-50 text-yellow-800 p-4 rounded-lg">
+									⚠️ No se pudo encontrar la ciudad. ¿Está bien escrita?
+								</div>`;
+							resultCard.classList.add('show');
 						});
 				} else {
 					alert('Debes introducir una ciudad o un pueblo');
@@ -226,15 +229,7 @@
 				const wind = data.current.wind_kph;
 				const rain = data.current.precip_mm;
 
-				let canWearSweatshirt = false;
-
-				if (temp >= 20 && temp <= 26) {
-					canWearSweatshirt = true;
-				} else if (temp >= 17 && temp < 20 && cloud <= 30 && wind <= 15) {
-					canWearSweatshirt = true;
-				} else if (temp >= 26 && temp <= 29 && rain > 0 && wind >= 15) {
-					canWearSweatshirt = true;
-				}
+				let canWearSweatshirt = decideSweatshirt(temp, cloud, wind, rain);
 
 				const weatherData = {
 					city: data.location.name,
@@ -246,6 +241,13 @@
 				};
 
 				return weatherData;
+			}
+			
+			function decideSweatshirt(temp, cloud, wind, rain) {
+				if (temp >= 20 && temp <= 26) return true;
+				if (temp >= 17 && temp < 20 && cloud <= 30 && wind <= 15) return true;
+				if (temp >= 26 && temp <= 29 && rain > 0 && wind >= 15) return true;
+				return false;
 			}
 			
 		});
@@ -329,12 +331,12 @@
 
     <footer class="mt-8 text-center text-gray-500 text-sm pb-4">
         Made with <span class="text-red-500">❤️</span> by 
-		<a href="https://www.linkedin.com/in/antonio-espinosa-velasco" target="_blank" class="text-blue-600 hover:underline">
+		<a href="https://www.linkedin.com/in/antonio-espinosa-velasco" target="_blank" class="text-blue-600 hover:underline" title="Enlace al LinkedIn del autor">
 			Antonio Espinosa
 		</a>
 		<div style="margin-top: 1rem;">
 			<div class="mt-2">
-				<a href="https://buymeacoffee.com/antonio.espinosa" target="_blank" class="text-yellow-600 underline hover:text-yellow-700">
+				<a href="https://buymeacoffee.com/antonio.espinosa" target="_blank" class="text-yellow-600 underline hover:text-yellow-700" title="Enlace para apoyar al autor">
 					☕ Invítame a un café
 				</a>
 			</div>
