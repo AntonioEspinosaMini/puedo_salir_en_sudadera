@@ -178,9 +178,10 @@
                 if (city) {
 					// Obtenemos el pais origen para afinar busqueda
 					const country = await getUserCountry();
+					const query = country ? `${city} ${country}` : city;
 					
                     // Llamar a la API de WeatherAPI
-					fetchWeatherData(city + ' ' + country)
+					fetchWeatherData(query)
 						.then(weatherData => {
 							let resultHTML = '';
 							
