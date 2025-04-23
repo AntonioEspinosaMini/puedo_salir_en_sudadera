@@ -254,7 +254,7 @@
 			function decideSweatshirt(temp, cloud, wind, rain) {
 				if (temp >= 20 && temp <= 25) return true;
 				if (temp >= 17 && temp < 20 && cloud <= 30 && wind <= 15) return true;
-				if (temp >= 25 && temp <= 28 && rain > 0 && wind >= 15) return true;
+				if (temp > 25 && temp <= 28 && rain > 0 && wind >= 15) return true;
 				return false;
 			}
 			
