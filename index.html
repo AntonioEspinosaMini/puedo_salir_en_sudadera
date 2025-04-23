@@ -169,6 +169,11 @@
             const resultContent = document.getElementById('resultContent');
             
             const apiKey = '2700c9141a4c4716957175706251104';
+			
+			let cachedCountry = null;
+
+			// Obtener país al cargar la página
+			getUserCountry().then(c => cachedCountry = c).catch(() => cachedCountry = null);
             
             checkButton.addEventListener('click', async function() {
                 const city = cityInput.value.trim().toLowerCase()
@@ -176,9 +181,7 @@
 					.replace(/[\u0300-\u036f]/g, "");
 				
                 if (city) {
-					// Obtenemos el pais origen para afinar busqueda
-					const country = await getUserCountry();
-					const query = country ? `${city} ${country}` : city;
+					const query = cachedCountry ? `${city} ${cachedCountry}` : city;
 					
                     // Llamar a la API de WeatherAPI
 					fetchWeatherData(query)
