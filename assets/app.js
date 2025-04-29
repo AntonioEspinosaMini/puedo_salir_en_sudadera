@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const resultCard = document.getElementById('resultCard');
     const resultContent = document.getElementById('resultContent');
 
-    const apiKey = '2700c9141a4c4716957175706251104';
-
     let cachedCountry = null;
 
     // Obtener país al cargar la página
@@ -70,7 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     async function fetchWeatherData(city) {
-        const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`;
+        const workerUrl = 'https://weather-proxy.mini-proyectos-antonio.workers.dev';
+        const url = `${workerUrl}?city=${encodeURIComponent(city)}`
         const response = await fetch(url);
         const data = await response.json();
 
