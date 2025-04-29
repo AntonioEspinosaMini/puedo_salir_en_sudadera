@@ -1,0 +1,81 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+}
+
+.sweatshirt-emoji {
+    font-size: 6rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.input-field {
+    transition: box-shadow 0.3s ease;
+}
+
+.input-field:focus {
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+.check-button {
+    transition: all 0.3s ease;
+    transform: scale(1);
+}
+
+.check-button:hover {
+    transform: scale(1.05);
+}
+
+.check-button:active {
+    transform: scale(0.98);
+}
+
+.result-card {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.result-card.show {
+    opacity: 1;
+    max-height: 300px;
+}
+
+/* Estilo para el contenedor del input y las sugerencias */
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Estilo para la lista de sugerencias */
+.suggestions-list {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@media (max-width: 640px) {
+    .sweatshirt-emoji {
+        font-size: 4rem;
+    }
+}
