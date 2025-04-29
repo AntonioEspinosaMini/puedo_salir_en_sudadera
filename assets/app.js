@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(weatherData => {
                     let resultHTML = '';
 
-                    if (weatherData.canWearSweatshirt) {
+                    if (weatherData.decision) {
                         resultHTML = `
                             <div class="bg-green-50 border border-green-200 text-green-800 rounded-xl p-3 w-full text-center shadow-sm">
                                 <h2 class="text-xl font-semibold mb-1">✅ ¡Sí, adelante!</h2>
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         resultHTML = `
                             <div class="bg-red-50 border border-red-200 text-red-800 rounded-xl p-3 w-full text-center shadow-sm">
                                 <h2 class="text-xl font-semibold mb-1">❌ Mejor no...</h2>
-                                <p class="text-sm text-red-700 mb-2">No parece buen clima para sudadera en <strong>${weatherData.city}</strong>.</p>
+                                <p class="text-sm text-red-700 mb-2">${weatherData.reason} en <strong>${weatherData.city}</strong>.</p>
                                 <div class="grid grid-cols-2 gap-3 text-sm text-left text-red-900 bg-white rounded-lg p-3 shadow-inner">
                                     <div>📈 <strong>Temperatura:</strong> ${weatherData.temperature}°C</div>
                                     <div>🌤️ <strong>Nubes:</strong> ${weatherData.condition}</div>
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
             condition: `${cloud}% nubes`,
             wind: `${wind} km/h`,
             rain: `${rain} mm`,
-            canWearSweatshirt
+            ...canWearSweatshirt
         };
 
         return weatherData;
@@ -108,10 +108,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function decideSweatshirt(temp, cloud, wind, rain) {
-        if (temp >= 20 && temp <= 25) return true;
-        if (temp >= 17 && temp < 20 && cloud <= 30 && wind <= 15) return true;
-        if (temp > 25 && temp <= 28 && rain > 0 && wind >= 15) return true;
-        return false;
+        if (temp >= 18 && temp <= 25) {
+            return { decision: true };
+        }
+        if (temp >= 15 && temp < 18 && cloud <= 30 && wind <= 15) {
+            return { decision: true };
+        }
+        if (temp > 25 && temp <= 28 && rain > 0 && wind >= 15) {
+            return { decision: true };
+        }
+    
+        // Si llegamos aquí, la decisión es false: buscamos el motivo
+        let reason = "";
+    
+        if (temp < 15) {
+            reason = "Hace demasiado fresco para ir en sudadera";
+        } else if (temp > 28) {
+            reason = "Hace demasiado calor para llevar sudadera";
+        } else if (temp >= 15 && temp < 18) {
+            if (cloud > 30) reason = "Hace demasiado fresco para ir en sudadera";
+            else if (wind > 15) reason = "Hace demasiado fresco para ir en sudadera";
+        } else if (temp > 25 && temp <= 28) {
+            if (rain === 0) reason = "Hace demasiado calor para llevar sudadera";
+            else if (wind < 15) reason = "Hace demasiado calor para llevar sudadera";
+        } else {
+            reason = "No parece buen clima para salir en sudadera";
+        }
+    
+        return {
+            decision: false,
+            reason: reason
+        };
     }
 
     // Codigo para autocompletado
