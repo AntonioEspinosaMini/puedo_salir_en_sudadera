@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const weatherData = {
             city: data.location.name,
             temperature: temp,
-            condition: `${cloud}% nubes`,
+            condition: `${cloud} %`,
             wind: `${wind} km/h`,
             rain: `${rain} mm`,
             ...canWearSweatshirt
@@ -107,27 +107,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function decideSweatshirt(temp, cloud, wind, rain) {
-        if (temp >= 18 && temp <= 25) {
+        if (temp >= 20 && temp <= 25) {
             return { decision: true };
         }
-        if (temp >= 15 && temp < 18 && cloud <= 30 && wind <= 15) {
+        if (temp >= 16 && temp < 20 && cloud <= 30 && wind <= 15) {
             return { decision: true };
         }
-        if (temp > 25 && temp <= 28 && rain > 0 && wind >= 15) {
+        if (temp > 25 && temp <= 27 && rain > 0 && wind >= 15) {
             return { decision: true };
         }
     
         // Si llegamos aquí, la decisión es false: buscamos el motivo
         let reason = "";
     
-        if (temp < 15) {
+        if (temp < 16) {
             reason = "Hace demasiado fresco para ir en sudadera";
-        } else if (temp > 28) {
+        } else if (temp > 27) {
             reason = "Hace demasiado calor para llevar sudadera";
-        } else if (temp >= 15 && temp < 18) {
+        } else if (temp >= 16 && temp < 20) {
             if (cloud > 30) reason = "Hace demasiado fresco para ir en sudadera";
             else if (wind > 15) reason = "Hace demasiado fresco para ir en sudadera";
-        } else if (temp > 25 && temp <= 28) {
+        } else if (temp > 25 && temp <= 27) {
             if (rain === 0) reason = "Hace demasiado calor para llevar sudadera";
             else if (wind < 15) reason = "Hace demasiado calor para llevar sudadera";
         } else {
