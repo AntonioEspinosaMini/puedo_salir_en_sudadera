@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .replace(/[\u0300-\u036f]/g, "");
 
         if (city) {
+            showLoading();
+
             const query = cachedCountry ? `${city} ${cachedCountry}` : city;
 
             // Llamar a la API de WeatherAPI
@@ -61,7 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             ⚠️ No se pudo encontrar la ciudad. ¿Está bien escrita?
                         </div>`;
                     resultCard.classList.add('show');
+                })
+                .finally(() => {
+                    hideLoading();
                 });
+                
         } else {
             alert('Debes introducir una ciudad o un pueblo');
         }
@@ -94,6 +100,26 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         return weatherData;
+    }
+
+    function showLoading() {
+        const button = document.getElementById('checkButton');
+        const text = document.getElementById('buttonText');
+        const spinner = document.getElementById('spinner');
+
+        button.disabled = true;
+        text.classList.add('hidden');
+        spinner.classList.remove('hidden');
+    }
+
+    function hideLoading() {
+        const button = document.getElementById('checkButton');
+        const text = document.getElementById('buttonText');
+        const spinner = document.getElementById('spinner');
+
+        button.disabled = false;
+        text.classList.remove('hidden');
+        spinner.classList.add('hidden');
     }
 
     async function getUserCountry() {
