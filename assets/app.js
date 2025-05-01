@@ -133,10 +133,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function decideSweatshirt(temp, cloud, wind, rain) {
-        if (temp >= 20 && temp <= 25) {
+        if (temp >= 19 && temp <= 25) {
             return { decision: true };
         }
-        if (temp >= 16 && temp < 20 && cloud <= 30 && wind <= 15) {
+        if (temp >= 17 && temp < 19 && cloud <= 30 && wind <= 15) {
             return { decision: true };
         }
         if (temp > 25 && temp <= 27 && rain > 0 && wind >= 15) {
@@ -146,11 +146,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Si llegamos aquí, la decisión es false: buscamos el motivo
         let reason = "";
     
-        if (temp < 16) {
+        if (temp < 17) {
             reason = "Hace demasiado fresco para ir en sudadera";
         } else if (temp > 27) {
             reason = "Hace demasiado calor para llevar sudadera";
-        } else if (temp >= 16 && temp < 20) {
+        } else if (temp >= 17 && temp < 19) {
             if (cloud > 30) reason = "Hace demasiado fresco para ir en sudadera";
             else if (wind > 15) reason = "Hace demasiado fresco para ir en sudadera";
         } else if (temp > 25 && temp <= 27) {
