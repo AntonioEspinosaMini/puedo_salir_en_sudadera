@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const cityInput = document.getElementById('cityInput');
 
-    // Codigo para API
+    // ********* Codigo para API *********
     const checkButton = document.getElementById('checkButton');
     const resultCard = document.getElementById('resultCard');
     const resultContent = document.getElementById('resultContent');
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     if (weatherData.decision) {
                         resultHTML = `
-                            <div class="bg-green-50 border border-green-200 text-green-800 rounded-xl p-3 w-full text-center shadow-sm">
+                            <div class="not-dark bg-green-50 border border-green-200 text-green-800 rounded-xl p-3 w-full text-center shadow-sm">
                                 <h2 class="text-xl font-semibold mb-1">✅ ¡Sí, adelante!</h2>
                                 <p class="text-sm text-green-700 mb-2">Hoy es un buen día para salir en sudadera en <strong>${weatherData.city}</strong>.</p>
                                 <div class="grid grid-cols-2 gap-3 text-sm text-left text-green-900 bg-white rounded-lg p-3 shadow-inner">
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         `;
                     } else {
                         resultHTML = `
-                            <div class="bg-red-50 border border-red-200 text-red-800 rounded-xl p-3 w-full text-center shadow-sm">
+                            <div class="not-dark bg-red-50 border border-red-200 text-red-800 rounded-xl p-3 w-full text-center shadow-sm">
                                 <h2 class="text-xl font-semibold mb-1">❌ Mejor no...</h2>
                                 <p class="text-sm text-red-700 mb-2">${weatherData.reason} en <strong>${weatherData.city}</strong>.</p>
                                 <div class="grid grid-cols-2 gap-3 text-sm text-left text-red-900 bg-white rounded-lg p-3 shadow-inner">
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    // Codigo para autocompletado
+    // ********** Codigo para autocompletado *********
     const inputContainer = cityInput.parentElement;
     const citiesData = 'assets/poblaciones.json';
 
@@ -235,6 +235,36 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (e) {
         if (!inputContainer.contains(e.target)) {
             hideAutocompleteSuggestions();
+        }
+    });
+
+    // ********* Codigo para dark mode ********
+    const themeToggle = document.getElementById('themeToggle');
+            
+    // Comprobar si hay un tema guardado en localStorage
+    const savedTheme = localStorage.getItem('theme');
+    
+    // Aplicar el tema guardado o usar el predeterminado
+    if (savedTheme === 'dark') {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+    }
+    
+    // Manejar el clic en el botón de toggle
+    themeToggle.addEventListener('click', function() {
+        if (document.documentElement.classList.contains('dark')) {
+            // Cambiar a modo claro
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            localStorage.setItem('theme', 'light');
+        } else {
+            // Cambiar a modo oscuro
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
         }
     });
 });

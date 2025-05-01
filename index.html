@@ -39,6 +39,7 @@
 	</script>
 
 	<link rel="stylesheet" href="assets/styles.css">
+	<link rel="stylesheet" href="assets/dark-mode.css">
 </head>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q8FP95DVZT"></script>
@@ -50,6 +51,24 @@
 </script>
 
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
+	<!-- Toggle para dark mode -->
+	<button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema">
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+    </button>
+
 	<div class="w-full max-w-md mx-auto text-center">
 		<!-- Header with sweatshirt emoji -->
 		<img src="assets/sudadera.png" alt="Sudadera" class="sweatshirt-emoji mb-1">

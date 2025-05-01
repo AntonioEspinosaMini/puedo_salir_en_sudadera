@@ -1,0 +1,174 @@
+.theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.light .theme-toggle {
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark .theme-toggle {
+    background-color: rgba(50, 50, 50, 0.5);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark .theme-toggle:hover {
+    background-color: rgba(70, 70, 70, 0.7);
+}
+
+/* Iconos del toggle */
+.moon-icon, .sun-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: opacity 0.3s ease;
+}
+
+.light .moon-icon {
+    display: block;
+    opacity: 1;
+}
+
+.light .sun-icon {
+    display: none;
+    opacity: 0;
+}
+
+.dark .moon-icon {
+    display: none;
+    opacity: 0;
+}
+
+.dark .sun-icon {
+    display: block;
+    opacity: 1;
+    color: #FFD700;
+}
+
+/* Estilos para el modo oscuro */
+.dark {
+    background: linear-gradient(to bottom, #1a1a1a, #2d2d2d);
+    color: #e0e0e0;
+}
+
+.dark h1 {
+    color: #f0f0f0;
+}
+
+.dark h2 {
+    color: #c0c0c0;
+}
+
+.dark .bg-white {
+    background-color: #2a2a2a !important;
+}
+
+.dark .text-gray-600, 
+.dark .text-gray-700, 
+.dark .text-gray-800 {
+    color: #c0c0c0 !important;
+}
+
+.dark .border-gray-200 {
+    border-color: #3a3a3a !important;
+}
+
+.dark input {
+    background-color: #333333 !important;
+    color: #e0e0e0 !important;
+    border-color: #444444 !important;
+}
+
+.dark input::placeholder {
+    color: #888888 !important;
+}
+
+.dark .shadow-md {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark footer {
+    color: #888888;
+}
+
+.dark a.text-blue-600 {
+    color: #7aa2f7 !important;
+}
+
+.dark a.text-yellow-600 {
+    color: #e0c060 !important;
+}
+
+.dark body {
+    background: linear-gradient(to bottom, #1a1a1a, #2d2d2d);
+}
+
+body, input, button, div, a, h1, h2, p {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Preservar colores originales para los resultados */
+.dark .not-dark {
+    color: inherit !important;
+    background-color: inherit !important;
+    border-color: inherit !important;
+}
+
+/* Preservar el fondo verde para resultados positivos */
+.dark .not-dark.bg-green-50 {
+    background-color: rgb(240, 253, 244) !important;
+    border-color: rgb(187, 247, 208) !important;
+    color: rgb(22, 101, 52) !important;
+}
+
+/* Preservar el fondo rojo para resultados negativos */
+.dark .not-dark.bg-red-50 {
+    background-color: rgb(254, 242, 242) !important;
+    border-color: rgb(254, 202, 202) !important;
+    color: rgb(153, 27, 27) !important;
+}
+
+/* Preservar textos dentro de los resultados */
+.dark .not-dark .text-green-700,
+.dark .not-dark .text-green-900,
+.dark .not-dark .text-red-700,
+.dark .not-dark .text-red-900 {
+    color: inherit !important;
+}
+
+/* Preservar el fondo blanco dentro de los resultados */
+.dark .not-dark .bg-white {
+    background-color: white !important;
+    color: inherit !important;
+}
+
+/* Preservar sombras */
+.dark .not-dark .shadow-sm,
+.dark .not-dark .shadow-inner {
+    box-shadow: inherit !important;
+}
+
+/* Asegurar que los textos dentro de los resultados mantengan su color */
+.dark .not-dark h2,
+.dark .not-dark p,
+.dark .not-dark div,
+.dark .not-dark strong {
+    color: inherit !important;
+}
