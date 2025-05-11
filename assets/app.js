@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function getUserCountry() {
         try {
-            const response = await fetch('http://ip-api.com/json');
+            const response = await fetch('https://ip-api.mini-proyectos-antonio.workers.dev/');
             const data = await response.json();
             return data.country;
         } catch (e) {
