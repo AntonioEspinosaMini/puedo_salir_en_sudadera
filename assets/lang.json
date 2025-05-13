@@ -4,6 +4,8 @@
         "subtitle": "Descubre si es el clima ideal para usar sudadera antes de salir de casa.",
         "inputPlaceholder": "Introduce tu ciudad o pueblo...",
         "checkButton": "Comprobar",
+        "emptyCity": "Debes introducir una ciudad o un pueblo",
+        "cityNotFound": "No se pudo encontrar la ciudad. ¿Está bien escrita?",
         "madeWith": "Made with",
         "by": "by",
         "coffee": "☕ Invítame a un café",
@@ -16,13 +18,16 @@
         "noGoTitle": "❌ Mejor no...",
         "tooCold": "Hace demasiado fresco para ir en sudadera",
         "tooHot": "Hace demasiado calor para llevar sudadera",
-        "notIdeal": "No parece buen clima para salir en sudadera"
+        "notIdeal": "No parece buen clima para salir en sudadera",
+        "in": "en"
     },
     "en": {
         "title": "Can I go out in a sweatshirt?",
         "subtitle": "Find out if it's the perfect weather to wear a sweatshirt before leaving home.",
         "inputPlaceholder": "Enter your city or town...",
         "checkButton": "Check",
+        "emptyCity": "You must enter a city or town",
+        "cityNotFound": "Could not find the city. Is it spelled correctly?",
         "madeWith": "Made with",
         "by": "by",
         "coffee": "☕ Buy me a coffee",
@@ -35,13 +40,16 @@
         "noGoTitle": "❌ Better not...",
         "tooCold": "It's too chilly to wear a sweatshirt",
         "tooHot": "It's too hot to wear a sweatshirt",
-        "notIdeal": "The weather doesn’t look ideal for a sweatshirt"
+        "notIdeal": "The weather doesn’t look ideal for a sweatshirt",
+        "in": "in"
     },
     "fr": {
         "title": "Puis-je sortir en sweat?",
         "subtitle": "Découvrez si le temps est idéal pour porter un sweat avant de quitter la maison.",
         "inputPlaceholder": "Entrez votre ville ou village...",
         "checkButton": "Vérifier",
+        "emptyCity": "Vous devez entrer une ville ou un village",
+        "cityNotFound": "Impossible de trouver la ville. Est-elle bien orthographiée ?",
         "madeWith": "Fait avec",
         "by": "par",
         "coffee": "☕ Offrez-moi un café",
@@ -54,6 +62,7 @@
         "noGoTitle": "❌ Mieux vaut ne pas...",
         "tooCold": "Il fait trop frais pour porter un sweat",
         "tooHot": "Il fait trop chaud pour porter un sweat",
-        "notIdeal": "Le temps ne semble pas idéal pour un sweat"
+        "notIdeal": "Le temps ne semble pas idéal pour un sweat",
+        "in": "à"
     }
 }
