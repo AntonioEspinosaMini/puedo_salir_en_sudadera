@@ -29,26 +29,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (weatherData.decision) {
                         resultHTML = `
                             <div class="not-dark bg-green-50 border border-green-200 text-green-800 rounded-xl p-3 w-full text-center shadow-sm">
-                                <h2 class="text-xl font-semibold mb-1">✅ ¡Sí, adelante!</h2>
-                                <p class="text-sm text-green-700 mb-2">Hoy es un buen día para salir en sudadera en <strong>${weatherData.city}</strong>.</p>
+                                <h2 class="text-xl font-semibold mb-1">${getTranslation('yesGoAheadTitle')}</h2>
+                                <p class="text-sm text-green-700 mb-2">${getTranslation('yesGoAheadMessage')} <strong>${weatherData.city}</strong>.</p>
                                 <div class="grid grid-cols-2 gap-3 text-sm text-left text-green-900 bg-white rounded-lg p-3 shadow-inner">
-                                    <div>📈 <strong>Temperatura:</strong> ${weatherData.temperature}°C</div>
-                                    <div>🌤️ <strong>Nubes:</strong> ${weatherData.condition}</div>
-                                    <div>💨 <strong>Viento:</strong> ${weatherData.wind}</div>
-                                    <div>🌧️ <strong>Lluvia:</strong> ${weatherData.rain}</div>
+                                    <div>📈 <strong>${getTranslation('temperature')}:</strong> ${weatherData.temperature}°C</div>
+                                    <div>🌤️ <strong>${getTranslation('clouds')}:</strong> ${weatherData.condition}</div>
+                                    <div>💨 <strong>${getTranslation('wind')}:</strong> ${weatherData.wind}</div>
+                                    <div>🌧️ <strong>${getTranslation('rain')}:</strong> ${weatherData.rain}</div>
                                 </div>
                             </div>
                         `;
                     } else {
                         resultHTML = `
                             <div class="not-dark bg-red-50 border border-red-200 text-red-800 rounded-xl p-3 w-full text-center shadow-sm">
-                                <h2 class="text-xl font-semibold mb-1">❌ Mejor no...</h2>
+                                <h2 class="text-xl font-semibold mb-1">${getTranslation('noGoTitle')}</h2>
                                 <p class="text-sm text-red-700 mb-2">${weatherData.reason} en <strong>${weatherData.city}</strong>.</p>
                                 <div class="grid grid-cols-2 gap-3 text-sm text-left text-red-900 bg-white rounded-lg p-3 shadow-inner">
-                                    <div>📈 <strong>Temperatura:</strong> ${weatherData.temperature}°C</div>
-                                    <div>🌤️ <strong>Nubes:</strong> ${weatherData.condition}</div>
-                                    <div>💨 <strong>Viento:</strong> ${weatherData.wind}</div>
-                                    <div>🌧️ <strong>Lluvia:</strong> ${weatherData.rain}</div>
+                                    <div>📈 <strong>${getTranslation('temperature')}:</strong> ${weatherData.temperature}°C</div>
+                                    <div>🌤️ <strong>${getTranslation('clouds')}:</strong> ${weatherData.condition}</div>
+                                    <div>💨 <strong>${getTranslation('wind')}:</strong> ${weatherData.wind}</div>
+                                    <div>🌧️ <strong>${getTranslation('rain')}:</strong> ${weatherData.rain}</div>
                                 </div>
                             </div>
                         `;
@@ -147,17 +147,17 @@ document.addEventListener('DOMContentLoaded', function () {
         let reason = "";
     
         if (temp < 17) {
-            reason = "Hace demasiado fresco para ir en sudadera";
+            reason = getTranslation("tooCold");
         } else if (temp > 27) {
-            reason = "Hace demasiado calor para llevar sudadera";
+            reason = getTranslation("tooHot");
         } else if (temp >= 17 && temp < 19) {
-            if (cloud > 30) reason = "Hace demasiado fresco para ir en sudadera";
-            else if (wind > 15) reason = "Hace demasiado fresco para ir en sudadera";
+            if (cloud > 30) reason = getTranslation("tooCold");
+            else if (wind > 15) reason = getTranslation("tooCold");
         } else if (temp > 25 && temp <= 27) {
-            if (rain === 0) reason = "Hace demasiado calor para llevar sudadera";
-            else if (wind < 15) reason = "Hace demasiado calor para llevar sudadera";
+            if (rain === 0) reason = getTranslation("tooHot");
+            else if (wind < 15) reason = getTranslation("tooHot");
         } else {
-            reason = "No parece buen clima para salir en sudadera";
+            reason = getTranslation("notIdeal");
         }
     
         return {
@@ -278,12 +278,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const saved = localStorage.getItem("sweatshirtImage");
     if (saved && images.includes(saved)) {
         currentIndex = images.indexOf(saved);
-        imageElement.src = `assets/${saved}`;
+        imageElement.src = `assets/img/${saved}`;
     }
 
     const updateImage = () => {
         const filename = images[currentIndex];
-        imageElement.src = `assets/${filename}`;
+        imageElement.src = `assets/img/${filename}`;
         localStorage.setItem("sweatshirtImage", filename);
     };
 
@@ -313,4 +313,79 @@ document.addEventListener('DOMContentLoaded', function () {
             updateImage();
         }
     });
+
+    // ********** Codigo para cambiar de idioma *******
+    const languageToggle = document.getElementById('languageToggle');
+    const languageFlag = document.getElementById('languageFlag');
+
+    const languages = [
+        { code: 'es', flag: '/assets/flags/es.png', alt: 'Español' },
+        { code: 'en', flag: '/assets/flags/gb.png', alt: 'English' },
+        { code: 'fr', flag: '/assets/flags/fr.png', alt: 'Français' }
+    ];
+
+    let currentLangIndex = 0;
+    let translations = {};
+    let currentLangCode = localStorage.getItem('lang') || 'es';
+
+    window.addEventListener('DOMContentLoaded', async () => {
+        const savedLang = localStorage.getItem('lang');
+        if (savedLang) {
+            const index = languages.findIndex(lang => lang.code === savedLang);
+            if (index !== -1) {
+                currentLangIndex = index;
+                currentLangCode = languages[index].code;
+            }
+        }
+
+        await loadTranslations(currentLangCode);
+        setLanguage(currentLangIndex);
+    });
+
+    languageToggle.addEventListener('click', async () => {
+        currentLangIndex = (currentLangIndex + 1) % languages.length;
+        currentLangCode = languages[currentLangIndex].code;
+        await loadTranslations(currentLangCode);
+        setLanguage(currentLangIndex);
+    });
+
+    function setLanguage(index) {
+        const lang = languages[index];
+        languageFlag.src = lang.flag;
+        languageFlag.alt = lang.alt;
+        localStorage.setItem('lang', lang.code);
+        updateTexts();
+    }
+
+    async function loadTranslations(langCode) {
+        try {
+            const response = await fetch('/assets/lang.json');
+            const data = await response.json();
+            translations = data[langCode] || {};
+        } catch (error) {
+            console.error('Error al cargar las traducciones:', error);
+            translations = {};
+        }
+    }
+
+    function updateTexts() {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[key]) {
+                el.textContent = translations[key];
+            }
+        });
+
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (translations[key]) {
+                el.setAttribute('placeholder', translations[key]);
+            }
+        });
+    }
+
+    function getTranslation(key) {
+        return translations[key] || key;
+    }
+
 });

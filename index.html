@@ -13,15 +13,15 @@
 
 	<meta property="og:title" content="¿Puedo salir en sudadera?">
 	<meta property="og:description"	content="Consulta el clima actual de tu ciudad y descubre si es buen día para usar sudadera.">
-	<meta property="og:image" content="https://puedosalirensudadera.com/assets/sudadera_roj.png">
+	<meta property="og:image" content="https://puedosalirensudadera.com/assets/img/sudadera_roj.png">
 	<meta property="og:url" content="https://puedosalirensudadera.com">
 	<meta property="og:type" content="website">
 
 	<link rel="canonical" href="https://www.puedosalirensudadera.com/" />
-	<link rel="icon" type="image/png" href="assets/sudadera_roj.png">
+	<link rel="icon" type="image/png" href="assets/img/sudadera_roj.png">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
 
-	<script src="assets/tailwind-cdn.min.js"></script>
+	<script src="assets/styles/tailwind-cdn.min.js"></script>
 
 	<script type="application/ld+json">
 		{
@@ -38,8 +38,8 @@
 		}
 	</script>
 
-	<link rel="stylesheet" href="assets/styles.css">
-	<link rel="stylesheet" href="assets/dark-mode.css">
+	<link rel="stylesheet" href="assets/styles/styles.css">
+	<link rel="stylesheet" href="assets/styles/dark-mode.css">
 </head>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q8FP95DVZT"></script>
@@ -51,6 +51,13 @@
 </script>
 
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
+	<!-- Toggle para idioma -->
+	 <div id="languageToggle" class="theme-toggle left-4 right-auto">
+		<button id="currentFlag" class="w-10 h-10 rounded-full overflow-hidden shadow-md border border-gray-300 focus:outline-none">
+			<img id="languageFlag" src="/assets/flags/es.png" alt="Español" class="w-full h-full object-cover">
+		</button>
+	 </div>
+
 	<!-- Toggle para dark mode -->
 	<button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema">
         <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -76,10 +83,10 @@
 				class="sweatshirt-emoji mx-auto w-full max-w-[480px] aspect-[3/2] object-contain transition-opacity duration-500 touch-none select-none hidden">
 		</div>
 
-		<h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+		<h1 data-i18n="title" class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
 			¿Puedo salir en sudadera?
 		</h1>
-		<h2 class="text-lg text-gray-600 mb-4">
+		<h2 data-i18n="subtitle" class="text-lg text-gray-600 mb-4">
 			Descubre si es el clima ideal para usar sudadera antes de salir de casa.
 		</h2>
 
@@ -87,13 +94,13 @@
 		<div class="bg-white rounded-xl shadow-md p-4 mb-6">
 			<div class="flex flex-col space-y-3">
 				<div class="input-container">
-					<input type="text" id="cityInput" placeholder="Introduce tu ciudad o pueblo..."
+					<input type="text" id="cityInput" data-i18n-placeholder="inputPlaceholder" placeholder="Introduce tu ciudad o pueblo..."
 						class="input-field px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-indigo-500 text-gray-700 w-full">
 					<!-- El desplegable de sugerencias se insertará aquí -->
 				</div>
 				<button id="checkButton"
 					class="check-button flex justify-center items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md">
-					<span id="buttonText">Comprobar</span>
+					<span data-i18n="checkButton" id="buttonText">Comprobar</span>
 					<svg id="spinner" class="hidden animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
 						viewBox="0 0 24 24">
 						<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -122,7 +129,7 @@
 			<div class="mt-2">
 				<a href="https://buymeacoffee.com/antonio.espinosa" target="_blank"
 					class="text-yellow-600 underline hover:text-yellow-700" title="Enlace para apoyar al autor">
-					☕ Invítame a un café
+					<span data-i18n="coffee">☕ Invítame a un café</span>
 				</a>
 			</div>
 		</div>
