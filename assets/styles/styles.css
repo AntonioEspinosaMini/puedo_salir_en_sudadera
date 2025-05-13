@@ -60,6 +60,12 @@ body {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
+.language-toggle-sm img {
+    border-radius: 9999px;
+    filter: saturate(60%) brightness(95%);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
 @keyframes float {
     0% {
         transform: translateY(0px);
